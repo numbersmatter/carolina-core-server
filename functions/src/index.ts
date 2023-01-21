@@ -3,6 +3,13 @@
 import { functions } from "./firebase";
 import * as express from "express";
 import type { Request, Response, NextFunction } from "express";
+import {
+  createNewDoc,
+  getCollection,
+  getDocData,
+  setDocData,
+  updateDocData,
+} from "./db/crud";
 const app = express();
 app.use(express.json());
 
@@ -14,8 +21,11 @@ app.get("/error", (req: Request, res: Response, next: NextFunction) => {
   throw new Error("this is error");
 });
 
-
-
+app.post("/create", createNewDoc);
+app.post("/set", setDocData);
+app.post("/update", updateDocData);
+app.post("/get", getDocData);
+app.post("/collection", getCollection);
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   const text = err.message;
